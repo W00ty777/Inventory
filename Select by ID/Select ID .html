@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>Firebase Leaderboard Example</title>
+  <script type="text/javascript" src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://www.firebase.com/css/example.css">
+</head>
+<body>
+<h3>SELECT * FROM user WHERE id = 123;</h3>
+<pre>?</pre>
+
+<script>
+Item = "https://testingtheory.firebaseio.com/Inventory/"+"-JHk0yDe1Icli684IKWk";
+  new Firebase(Item).once('value', show);
+
+function show(snap) {
+   $('pre').text(JSON.stringify(snap.val(), null, 1));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+<head>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="C:\Users\Danelle\Google Drive\Inventory\Inventory.css">
+</head>
+<body>
+<input type='text' id='itemInput' placeholder='Item'>
+<input type='button' id='less' value='-'>
+<div id='inventoryDiv'></div>
+
+<script>
+var ref = new Firebase("https://awesome.firebaseio-demo.com/links");
+
+ref.limit(20).on("child_added", function(snapshot) {
+  // Add link to home page.
+});
+
+ref.limit(20).on("child_removed", function(snapshot) {
+  // Remove link from home page.
+});
+
+var commentsRef =  new Firebase("https://awesome.firebaseio-demo.com/comments");
+var linkRef =  new Firebase("https://awesome.firebaseio-demo.com/links");
+var linkCommentsRef = linkRef.child(LINK_ID);
+linkCommentsRef.on("child_added", function(snap) {
+  commentsRef.child(snap.name()).once("value", function() {
+    // Render the comment on the link page.
+  ));
+});
+
+functon onCommentSubmitted(comment) {
+  var root = new Firebase("https://awesome.firebaseio-demo.com");
+  var id = root.child("/comments").push();
+  id.set(comment, function(err) {
+    if (!err) {
+      var name = id.name();
+      root.child("/links/" + comment.link + "/comments/" + name).set(true);
+      root.child("/users/" + comment.author + "/comments/" + name).set(true);
+    }
+  });
+}
+
+function deleteComment(id) {
+  var url = "https://awesome.firebaseio-demo.com/comments/";
+  new Firebase(url + id).remove();
+}
+function editComment(id, comment) {
+  var url = "https://awesome.firebaseio-demo.com/comments/";
+  new Firebase(url + id).set(comment);
+}
+
+</script>
+</body>
+</html>

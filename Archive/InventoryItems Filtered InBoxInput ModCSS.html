@@ -1,0 +1,40 @@
+<html>
+<head>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="C:\Users\Danelle\Google Drive\Inventory\Inventory.css">
+</head>
+<body>
+<div id='inventory1Div'></div>
+<!--Note that messagesDiv is special and will produce a pretty box-->
+
+<input type='text' id='nameInput' placeholder='Name'>
+<input type='text' id='messageInput' placeholder='Message...'>
+<script>
+
+  // Get a reference to the root of the chat data.
+  var inventory1Ref = new Firebase('https://scorching-fire-4085.firebaseio.com/Inventory');
+
+  // When the user presses enter on the message input, write the message to firebase.
+  $('#inventoryInput').keypress(function (e) {
+    if (e.keyCode == 13) {
+      var name = $('#nameInput').val();
+      var text = $('#messageInput').val();
+      inventory1Ref.push({name:name, text:text});
+      $('#inventoryInput').val('');
+    }
+  });
+
+  // A callback that returns each item in Inventory. This is the text that should be in all variations of code.
+  // Returns 100 items, Active
+  inventory1Ref.limit(100).on('child_added', function (snapshot) {
+    var inventory = snapshot.val();
+    if(inventory.Quantity>0){
+      $('<div/>').text(inventory.Quantity).prepend($('<em/>')
+        .text(inventory.Description+': ')).appendTo($('#inventory1Div'));
+      $('#inventory1Div')[0].scrollTop = $('#inventory1Div')[0].scrollHeight;
+    }
+  });
+</script>
+</body>
+</html>

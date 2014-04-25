@@ -1,0 +1,64 @@
+<html>
+<head>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="https://www.firebase.com/css/example.css">
+</head>
+<body>
+
+<!--http://www.w3schools.com/tags/att_input_type.asp-->
+Inventory<br/>
+<input type='text' id='codeInput' placeholder='Barcode'>
+<input type='text' id='descInput' placeholder='Description'>
+<input type='text' id='qtyInput' placeholder='Quantity'>
+<input type='date' id='expInput' placeholder='Expiration'>
+<input type='number' id='weightInput' placeholder='Weight in grams'>
+<input type='text' id='noteInput' placeholder='Note'>
+<input type='text' id='locInput' placeholder='Location'>
+<input type='text' id='containerInput' placeholder='Container'>
+
+
+<script>
+
+  // Get a reference to the root of the chat data.
+  var newItem = new Firebase('https://testingtheory.firebaseio.com/');
+
+  // When the user presses enter on the container, write the entry to firebase.
+  $('#containerInput').keypress(function (e) {
+    if (e.keyCode == 13) {
+	var Barcode = $('#codeInput').val();
+	var Description = $('#descInput').val();
+	var Quantity = $('#qtyInput').val();
+	var Expiration = $('#expInput').val();
+	var Weight = $('#weightInput').val();
+	var Note = $('#noteInput').val();
+	var Location = $('#locInput').val();
+	var Container = $('#containerInput').val();
+
+      newItem.push({Barcode:Barcode, Description:Description, Quantity:Quantity, Expiration:Expiration, Weight:Weight, Note:Note, Location:Location, Container:Container});
+	$('#codeInput').val('');
+	$('#descInput').val('');
+	$('#qtyInput').val('');
+	$('#expInput').val('');
+	$('#weightInput').val('');
+	$('#noteInput').val('');
+	$('#locInput').val('');
+	$('#containerInput').val('');
+    }
+  });
+
+
+
+//Adding a completion callback	
+dataRef.set('milk steak', function(error) {
+  if (error) {
+    alert('Data could not be saved.' + error);
+  } else {
+    alert('Data saved successfully.');
+  }
+});
+
+
+</script>
+</body>
+</html>

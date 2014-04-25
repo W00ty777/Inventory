@@ -1,0 +1,37 @@
+<html>
+<head>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="C:\Users\Danelle\Google Drive\Inventory\Inventory.css">
+</head>
+<body>
+<input type='text' id='itemInput' placeholder='Item'>
+<input type='button' id='less' value='-'>
+<div id='inventoryDiv'></div>
+
+<script>
+  // Get a reference to the root of the chat data.
+  var inventoryRef = new Firebase('https://testingtheory.firebaseio.com');
+
+  // A callback that returns each item in Inventory. This is the text that should be in all variations of code.
+  // Returns 100 items, Active
+  inventoryRef.limit(100).on('child_added', function (snapshot) {
+    var inventory = snapshot.val();
+    if(inventory.Quantity>0){
+      $('<div/>').text(inventory.Quantity)
+	.append($("<input type='button' id='more' value='+'>"))
+	.prepend($("<input type='button' id='less' value='-'>"))
+	.prepend($('<em/>').text(inventory.Description+': ')).appendTo($('#inventoryDiv'));
+      $('#inventoryDiv')[0].scrollTop = $('#inventoryDiv')[0].scrollHeight;
+    }
+  });
+    // Add or subtract qty
+    var self = this;
+    $('#less').show();
+    $("#less").click(function () {
+         alert("The button was clicked.");
+    });
+
+</script>
+</body>
+</html>

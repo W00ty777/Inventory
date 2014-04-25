@@ -1,0 +1,35 @@
+<html>
+<head>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="https://www.firebase.com/css/example.css">
+</head>
+<body>
+
+<!--http://www.w3schools.com/tags/att_input_type.asp-->
+http://www.w3schools.com/tags/ev_onchange.asp
+Inventory<br/>
+<input type='text' id='searchInput' placeholder='Search' onchange="checkField(this.value)">
+
+<script>
+
+  // Get a reference to the root of the chat data.
+  var findRef = new Firebase('https://testingtheory.firebaseio.com/');
+
+  // When the user presses enter on the container, write the entry to firebase.
+function checkField(val)
+  $('#searchInput').keypress(function (e) {
+    if (e.keyCode == 13) {
+	var search = $('#searchInput').val();
+	findRef.on('value', function (snapshot) {
+	  var found = snapshot.val();
+	  alert('This is what we found: '+ snapshot.val());
+    }
+  });
+
+
+
+
+</script>
+</body>
+</html>

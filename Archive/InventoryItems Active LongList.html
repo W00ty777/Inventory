@@ -1,0 +1,25 @@
+<html>
+<head>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="https://www.firebase.com/css/example.css">
+</head>
+<body>
+<div id='inventoryDiv'></div>
+<script>
+
+  // Get a reference to the root of the chat data.
+  var inventoryRef = new Firebase('https://scorching-fire-4085.firebaseio.com/Inventory');
+
+  // A callback that returns each item in Inventory. This is the text that should be in all variations of code.
+  inventoryRef.limit(100).on('child_added', function (snapshot) {
+    var inventory = snapshot.val();
+    if(inventory.Quantity>0){
+      $('<div/>').text(inventory.Quantity).prepend($('<em/>')
+        .text(inventory.Description+': ')).appendTo($('#inventoryDiv'));
+      $('#inventoryDiv')[0].scrollTop = $('#inventoryDiv')[0].scrollHeight;
+    }
+  });
+</script>
+</body>
+</html>

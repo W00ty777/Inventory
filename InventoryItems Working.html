@@ -1,0 +1,84 @@
+<html>
+<head>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="https://www.firebase.com/css/example.css">
+</head>
+<body>
+
+<!--http://www.w3schools.com/tags/att_input_type.asp-->
+http://www.w3schools.com/tags/ev_onchange.asp
+Inventory<br/>
+<div id='countDiv'>Items in inventory : </div>
+<input type='text' id='searchInput' placeholder='Search'>
+<div id='inventory1Div'></div>
+<div class="device-table-container">
+   <div class="table-wrap">
+		<table class="table table-bordered table-condensed">
+			<thead>
+			   <tr>
+				<th>Display Name</th>
+				<th>Type</th>
+				<th>Location</th>
+				<th>Hub</th>
+				<th>Group</th>
+				<th>Zigbee Id</th>
+				<th>Device Network Id</th>
+				<th>Status</th>
+				<th>Last Activity</th>
+			   </tr>
+			</thead>
+	   <tbody>
+		<tr class="even">
+			<td><a href="/device/show/f8c46fe5-be7f-4af4-8eba-a7f97dfb990b">TV Power</a></td>
+			<td>On/Off Shield</td>
+			<td><a href="/location/show/08fb9dc2-adb7-4266-b8c8-03754d2661bc">Home</a></td>
+			<td><a href="/hub/show/368ef7f8-68cb-4f36-a370-3ea5bc12bbc2">home</a></td>
+			<td><a href="/group/show"></a></td>
+			<td>D052A800037E0007</td>
+			<td>78AB</td>
+			<td>ACTIVE</td>
+			<td class="last-activity index-0">moments ago</td>
+		</tr>
+		<tr class="odd">
+			<td><a href="/device/show/a4c7cf9c-36ff-4db6-adf4-d722abc923c0">John's Phone</a></td>
+			<td>Mobile Presence</td>
+			<td><a href="/location/show/08fb9dc2-adb7-4266-b8c8-03754d2661bc">Home</a></td>
+			<td><a href="/hub/show"></a></td>
+			<td><a href="/group/show"></a></td>
+			<td>D052A800037E0007</td>
+			<td>e6afe5e2672301709f28afcbc0f87b30</td>
+			<td>ACTIVE</td>
+			<td class="last-activity index-1">3 weeks ago</td>
+		</tr>
+	   </tbody>
+	</table>
+</div>
+</div>
+
+<script>
+  // A callback that returns each item in Inventory. This is the text that should be in all variations of code.
+  // Returns 100 items, Active
+$('#searchInput').keypress(function (e) {
+  if (e.keyCode == 13) {
+	var inventory1Ref = new Firebase('https://testingtheory.firebaseio.com');
+	var foundItem = $('#searchInput').val();
+	// A callback that returns each item in Inventory. This is the text that should be in all variations of code.
+	// Returns 100 items, Active
+	inventory1Ref.limit(100).on('child_added', function (snapshot) {
+	  var inventory = snapshot.val();
+	  if(inventory.Description === foundItem ){
+	    $('<div/>').text(inventory.Quantity).prepend($('<em/>')
+	      .text(inventory.Description+': ')).appendTo($('#inventory1Div'));
+	    $('#inventory1Div')[0].scrollTop = $('#inventory1Div')[0].scrollHeight;
+	  }
+	});
+  }
+});
+		
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "Tester" : {
+    ".value" : true,
+    ".priority" : 1000.0
+  },
+  "Test2" : {
+    ".value" : true,
+    ".priority" : 2000.0
+  }
+}
